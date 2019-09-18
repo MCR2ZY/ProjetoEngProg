@@ -3,6 +3,7 @@ import numpy as np
 import argparse
 import cv2
 import pdb
+import time
 
 # método de convulsão
 def convolve(image, kernel):
@@ -42,7 +43,7 @@ def convolve(image, kernel):
 	output = (output * 255).astype("uint8")
 
 	# return a imagem de sáida
-	print(np.median(output), sep = "\n")
+	#print(np.median(output), sep = "\n")
 	
 	return output
 
@@ -81,31 +82,42 @@ sobelY = np.array((
 # construir o banco de kernel, uma lista de kernels que vamos
 # aplicar usando a função `convole` e a Função filter2D do OpenCV
 
-kernelBank = (
-        ("gabor", gabor),
-	("large_blur", largeBlur),
-	("sharpen", sharpen),
-	("laplacian", laplacian),
-	("sobel_x", sobelX),
-	("sobel_y", sobelY)        
-)
+kernelBank = ("gabor", gabor)      
 
 # carrega a imagem de entrada e convert para escala de cinza.
 image = cv2.imread(args["image"])
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-# loop over the kernels
-for (kernelName, kernel) in kernelBank:
-	print("[INFO] aplicando {} kernel".format(kernelName))
-	# aplicando função convolve
-	convoleOutput = convolve(gray, kernel)
-	# aplicando função2D do openCV
-	opencvOutput = cv2.filter2D(gray, -1, kernel)
+# Kernel Especifico
+tempoInicial = time.time()
+# aplicando função convolve
+convoleOutput = convolve(gray, gabor)
 
-	# mostrar imagens de saída
-	cv2.imshow("original", gray)
-	cv2.imshow("{} - convole".format(kernelName), convoleOutput)
-	
-	#cv2.imshow("{} - opencv".format(kernelName), opencvOutput)
-	cv2.waitKey(0)
-	cv2.destroyAllWindows()
+tempoFinal = time.time()
+tempoExecucao = str(tempoFinal - tempoInicial)
+
+#Criação de Arquivo com os Tempos
+arquivo = open('tempos.txt', 'r') # Abra o arquivo (leitura)
+conteudo = arquivo.readlines()
+if not conteudo:
+	conteudo.append(tempoExecucao)
+	arquivo = open('tempos.txt', 'w') # Abre novamente o arquivo (escrita)
+	arquivo.writelines(conteudo)    # escreva o conteúdo criado anteriormente nele.
+	arquivo.close()
+else:
+	conteudo.append("\n")
+	conteudo.append(tempoExecucao)
+	arquivo = open('tempos.txt', 'w') # Abre novamente o arquivo (escrita)
+	arquivo.writelines(conteudo)    # escreva o conteúdo criado anteriormente nele.
+	arquivo.close()
+
+# aplicando função2D do openCV
+opencvOutput = cv2.filter2D(gray, -1, gabor)
+
+# mostrar imagens de saída
+cv2.imshow("original", gray)
+cv2.imshow("{} - convole".format("gabor"), convoleOutput)
+
+#cv2.imshow("{} - opencv".format(kernelName), opencvOutput)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
