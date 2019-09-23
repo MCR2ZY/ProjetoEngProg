@@ -84,36 +84,37 @@ while i > 0:
 	# Kernel Especifico
 	
 	for (kernelName, kernel) in kernelBank:
-		
-		line = 0
+		try:
+			line = 0
 
-		# aplicando função convolve
-		tempoInicial = time.time()
+			# aplicando função convolve
+			tempoInicial = time.time()
 
-		convoleOutput = convolve(gray, kernel)
+			convoleOutput = convolve(gray, kernel)
 
-		tempoFinal = time.time()
-		tempoAux = tempoFinal - tempoInicial
-		tempoExecucao = str(tempoAux)
+			tempoFinal = time.time()
+			tempoAux = tempoFinal - tempoInicial
+			tempoExecucao = str(tempoAux)
 
-		conteudoAux = str(tempoAux) + ' ' + tempoExecucao
+			conteudoAux = str(tempoAux) + ' ' + tempoExecucao
 
-		#Criação de Arquivo com os Tempos
-		arquivo = open('tempos.txt', 'r') # Abra o arquivo (leitura)
-		conteudo = arquivo.readlines()
-		if not conteudo:
-			conteudo.append(conteudoAux)
-			arquivo = open('tempos.txt', 'w') # Abre novamente o arquivo (escrita)
-			arquivo.writelines(conteudo)    # escreva o conteúdo criado anteriormente nele.
-			arquivo.close()
-		else:
-			conteudo.append("\n")
-			conteudo.append(conteudoAux)
-			arquivo = open('tempos.txt', 'w') # Abre novamente o arquivo (escrita)
-			arquivo.writelines(conteudo)    # escreva o conteúdo criado anteriormente nele.
-			arquivo.close()
-		line += 1
-
+			#Criação de Arquivo com os Tempos
+			arquivo = open('tempos.txt', 'r') # Abra o arquivo (leitura)
+			conteudo = arquivo.readlines()
+			if not conteudo:
+				conteudo.append(conteudoAux)
+				arquivo = open('tempos.txt', 'w') # Abre novamente o arquivo (escrita)
+				arquivo.writelines(conteudo)    # escreva o conteúdo criado anteriormente nele.
+				arquivo.close()
+			else:
+				conteudo.append("\n")
+				conteudo.append(conteudoAux)
+				arquivo = open('tempos.txt', 'w') # Abre novamente o arquivo (escrita)
+				arquivo.writelines(conteudo)    # escreva o conteúdo criado anteriormente nele.
+				arquivo.close()
+			line += 1
+		except NameError:
+  			print("erro processo kernel tempo")
 	# aplicando função2D do openCV
 	opencvOutput = cv2.filter2D(gray, -1, gabor)
 	
