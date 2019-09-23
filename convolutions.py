@@ -93,22 +93,19 @@ while i > 0:
 			convoleOutput = convolve(gray, kernel)
 
 			tempoFinal = time.time()
-			tempoAux = tempoFinal - tempoInicial
-			tempoExecucao = str(tempoAux)
-
-			conteudoAux = str(tempoAux) + ' ' + tempoExecucao
+			tempoExecucao = tempoFinal - tempoInicial
 
 			#Criação de Arquivo com os Tempos
 			arquivo = open('tempos.txt', 'r') # Abra o arquivo (leitura)
 			conteudo = arquivo.readlines()
 			if not conteudo:
-				conteudo.append(conteudoAux)
+				conteudo.append(tempoExecucao)
 				arquivo = open('tempos.txt', 'w') # Abre novamente o arquivo (escrita)
 				arquivo.writelines(conteudo)    # escreva o conteúdo criado anteriormente nele.
 				arquivo.close()
 			else:
 				conteudo.append("\n")
-				conteudo.append(conteudoAux)
+				conteudo.append(tempoExecucao)
 				arquivo = open('tempos.txt', 'w') # Abre novamente o arquivo (escrita)
 				arquivo.writelines(conteudo)    # escreva o conteúdo criado anteriormente nele.
 				arquivo.close()
