@@ -93,10 +93,10 @@ while i > 0:
 		convoleOutput = convolve(gray, kernel)
 
 		tempoFinal = time.time()
-		tempoExecucao = str(tempoFinal - tempoInicial)
+		tempoAux = tempoFinal - tempoInicial
+		tempoExecucao = str(tempoAux)
 
-		linha = line
-		conteudoAux = str(linha) + ' ' + tempoExecucao
+		conteudoAux = str(tempoAux) + ' ' + tempoExecucao
 
 		#Criação de Arquivo com os Tempos
 		arquivo = open('tempos.txt', 'r') # Abra o arquivo (leitura)
@@ -116,14 +116,5 @@ while i > 0:
 
 	# aplicando função2D do openCV
 	opencvOutput = cv2.filter2D(gray, -1, gabor)
-
-	'''
-	# mostrar imagens de saída
-	cv2.imshow("original", gray)
-	cv2.imshow("{} - convole".format("gabor"), convoleOutput)
-
-	#cv2.imshow("{} - opencv".format(kernelName), opencvOutput)
-	cv2.waitKey(0)
-	cv2.destroyAllWindows()
-	'''
+	
 	i-=1
