@@ -93,7 +93,7 @@ while i > 0:
 			convoleOutput = convolve(gray, kernel)
 
 			tempoFinal = time.time()
-			tempoExecucao = tempoFinal - tempoInicial
+			tempoExecucao = str(tempoFinal - tempoInicial)
 
 			#Criação de Arquivo com os Tempos
 			arquivo = open('tempos.txt', 'r') # Abra o arquivo (leitura)
