@@ -85,8 +85,6 @@ while i > 0:
 	
 	for (kernelName, kernel) in kernelBank:
 		try:
-			line = 0
-
 			# aplicando função convolve
 			tempoInicial = time.time()
 
@@ -95,21 +93,23 @@ while i > 0:
 			tempoFinal = time.time()
 			tempoExecucao = str(tempoFinal - tempoInicial)
 
+			line = tempoExecucao.count
+
+			conteudoAux = line + ' ' + tempoExecucao
+
 			#Criação de Arquivo com os Tempos
 			arquivo = open('tempos.txt', 'r') # Abra o arquivo (leitura)
 			conteudo = arquivo.readlines()
 			if not conteudo:
-				conteudo.append(tempoExecucao)
 				arquivo = open('tempos.txt', 'w') # Abre novamente o arquivo (escrita)
-				arquivo.writelines(conteudo)    # escreva o conteúdo criado anteriormente nele.
+				arquivo.writelines(conteudoAux)    # escreva o conteúdo criado anteriormente nele.
 				arquivo.close()
 			else:
 				conteudo.append("\n")
-				conteudo.append(tempoExecucao)
+				conteudo.append(conteudoAux)
 				arquivo = open('tempos.txt', 'w') # Abre novamente o arquivo (escrita)
 				arquivo.writelines(conteudo)    # escreva o conteúdo criado anteriormente nele.
 				arquivo.close()
-			line += 1
 		except NameError:
   			print("erro processo kernel tempo")
 	# aplicando função2D do openCV
